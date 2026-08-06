@@ -1,0 +1,12 @@
+{
+  "SUPER_ADMIN": [
+    "create_user",
+    "delete_user",
+    "update_user",
+    "view_user",
+    "create_role",
+    "delete_role",
+    "update_role",
+    "view_role"
+  ]
+}
