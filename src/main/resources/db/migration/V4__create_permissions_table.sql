@@ -1,6 +1,10 @@
 CREATE TABLE `roles` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
+    `created_at`   TIMESTAMP,
+    `modified_at` TIMESTAMP,
+    `created_by` VARCHAR(100),
+    `modified_by` VARCHAR(100),
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_roles_naenqnbr` (`name`)
 );
