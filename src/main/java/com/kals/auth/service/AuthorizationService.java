@@ -1,5 +1,6 @@
 package com.kals.auth.service;
 
+import com.kals.auth.EntityModel.RoleEntity;
 import com.kals.auth.EntityModel.UserEntity;
 import com.kals.auth.Enum.AuthorizationConstants;
 import com.kals.auth.Util.UserRequest;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
-import java.util.Date;
+import java.util.*;
 
 
 @Service
@@ -26,8 +27,8 @@ public class AuthorizationService {
     @Value("${auth.jwt.secret}")
     private String secretKey;
 
-    @Value(("${jwt.expiration}"))
-    private Long tokenExpiryTime;
+    @Value(("${auth.jwt.expiration-minutes}"))
+    private Long tokenExpiryMinutes;
 
     public AuthorizationService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -57,12 +58,16 @@ public class AuthorizationService {
         SecretKey key = Keys.hmacShaKeyFor(
                 secretKey.getBytes(StandardCharsets.UTF_8));
 
+        Set<RoleEntity> roles = userEntity.getRoles();
+        List<String> roleRes = roles.stream().map(RoleEntity::getName).toList();
+
+
         return Jwts.builder()
                 .subject(userEntity.getEmail())
                 .claim(AuthorizationConstants.EMAIL.getField(), userEntity.getEmail())
                 .claim(AuthorizationConstants.USER_ID.getField(), userEntity.getId())
-                .claim(AuthorizationConstants.USER_ROLE.getField(), userEntity.getRole().toString())
-                .expiration(new Date(System.currentTimeMillis() + tokenExpiryTime))
+                .claim(AuthorizationConstants.USER_ROLE.getField(), String.join(",", roleRes))
+                .expiration(new Date(System.currentTimeMillis() + (tokenExpiryMinutes * 60 * 1000)))
                 .signWith(key)
                 .compact();
     }

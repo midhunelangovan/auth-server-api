@@ -1,6 +1,5 @@
 package com.kals.auth.DataModel;
 
-import com.kals.auth.Enum.UserRole;
 import io.kals.core.model.Audit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +17,7 @@ public class User extends Audit {
     private String userName;
     private String email;
     private String password;
-    private UserRole role;
     private Boolean isActive;
+    private Role role;
     private ZonedDateTime lastLoginAt;
 }
