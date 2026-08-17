@@ -1,17 +1,17 @@
 package com.kals.auth.DataModel;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
-public class Role {
+public class Permission {
 
     private Long id;
     private String name;
+    private String code;
+    private Long applicationId;
     private String description;
-    private List<Permission> permissions;
 
 }

@@ -64,7 +64,7 @@ public class AuthorizationService {
 
         return Jwts.builder()
                 .subject(userEntity.getEmail())
-                .claim(AuthorizationConstants.EMAIL.getField(), userEntity.getEmail())
+                .claim(AuthorizationConstants.EMAIL.getField(), userEntity.getUserName())
                 .claim(AuthorizationConstants.USER_ID.getField(), userEntity.getId())
                 .claim(AuthorizationConstants.USER_ROLE.getField(), String.join(",", roleRes))
                 .expiration(new Date(System.currentTimeMillis() + (tokenExpiryMinutes * 60 * 1000)))

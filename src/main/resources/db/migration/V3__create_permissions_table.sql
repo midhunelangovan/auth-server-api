@@ -1,6 +1,7 @@
 CREATE TABLE `roles` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
+    `description` VARCHAR(200),
     `created_at`   TIMESTAMP,
     `modified_at` TIMESTAMP,
     `created_by` VARCHAR(100),

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,10 +15,12 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 public class User extends Audit {
     private Long id;
+    private String firstName;
+    private String lastName;
     private String userName;
     private String email;
     private String password;
     private Boolean isActive;
-    private Role role;
+    private List<Role> role;
     private ZonedDateTime lastLoginAt;
 }
