@@ -21,8 +21,8 @@ repositories {
 dependencies {
 
     // Custom Frameworks
-    implementation 'io.kals:security-framework:1.0.0'
-    implementation 'io.kals:core-framework:1.0.0'
+    implementation 'io.kals:security-framework:1.0.1'
+    implementation 'io.kals:core-framework:1.0.1'
 
     // Spring Boot
     implementation 'org.springframework.boot:spring-boot-starter-web'

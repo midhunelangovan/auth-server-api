@@ -5,7 +5,6 @@ CREATE TABLE  `users`(
     `last_name` VARCHAR(100) NOT NULL,
     `email` VARCHAR(100) NOT NULL,
     `password` TEXT NOT NULL,
-    `role`  VARCHAR(100) NOT NULL,
     `is_active` BIT DEFAULT FALSE,
     `last_login_at` TIMESTAMP,
     `created_at`   TIMESTAMP,

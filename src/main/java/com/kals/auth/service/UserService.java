@@ -1,16 +1,19 @@
 package com.kals.auth.service;
 
+import com.kals.auth.DataModel.Role;
 import com.kals.auth.DataModel.User;
 import com.kals.auth.EntityModel.UserEntity;
 import com.kals.auth.Mapper.UserMapper;
 import com.kals.auth.repository.UserRepository;
-import io.kals.core.service.AbstractCrudService;
-import io.kals.security.utils.AuthUtils;
 import io.kals.core.exception.Exceptions.DataValidationException;
 import io.kals.core.exception.Exceptions.ResourceNotFoundException;
-import io.kals.core.utility.UserUtil;
+import io.kals.core.service.AbstractCrudService;
+import io.kals.security.utils.AuthUtils;
+import io.kals.security.utils.UserUtil;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -19,11 +22,13 @@ public class UserService extends AbstractCrudService<UserEntity, User, Long> {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final RoleService roleService;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, RoleService roleService) {
         super(userRepository, userMapper);
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.roleService = roleService;
     }
 
     @Override
@@ -58,5 +63,14 @@ public class UserService extends AbstractCrudService<UserEntity, User, Long> {
                 throw new DataValidationException("AUTH_40402");
             }
         }
+    }
+
+    @Transactional
+    public String getUserPermissions(long id) {
+        User user = getById(id);
+        List<Role> roles = user.getRole();
+        List<Long> roleIds = roles.stream().map(Role::getId).toList();
+        List<String> userPermissions = roleService.rolePermissions(roleIds);
+        return String.join(",", userPermissions);
     }
 }
